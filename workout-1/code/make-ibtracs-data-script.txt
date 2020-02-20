@@ -1,0 +1,38 @@
+
+Setting up workout 1
+# Jeremy's Air:stat133 jeremymatinez$ mkdir workout1
+# Jeremy's Air:workout1 jeremymatinez$ touch README.md
+# Jeremy's Air:workout1 jeremymatinez$ mkdir data
+# Jeremy's Air:workout1 jeremymatinez$ mkdir code
+# Jeremy's Air:workout1 jeremymatinez$ mkdir output
+# Jeremy's Air:workout1 jeremymatinez$ mkdir images
+# Jeremy's Air:workout1 jeremymatinez$ mkdir report
+# Jeremy's Air:workout1 jeremymatinez$ cd data
+# Jeremy's Air:data jeremymatinez$ curl -O ftp://eclipse.ncdc.noaa.gov/pub/ibtracs/v03r10/all/csv/year/Year.2010.ibtracs_all.v03r10.csv
+# Jeremy's Air:data jeremymatinez$ curl -O ftp://eclipse.ncdc.noaa.gov/pub/ibtracs/v03r10/all/csv/year/Year.2011.ibtracs_all.v03r10.csv
+# Jeremy's Air:data jeremymatinez$ curl -O ftp://eclipse.ncdc.noaa.gov/pub/ibtracs/v03r10/all/csv/year/Year.2012.ibtracs_all.v03r10.csv
+# Jeremy's Air:data jeremymatinez$ curl -O ftp://eclipse.ncdc.noaa.gov/pub/ibtracs/v03r10/all/csv/year/Year.2013.ibtracs_all.v03r10.csv
+# Jeremy's Air:data jeremymatinez$ curl -O ftp://eclipse.ncdc.noaa.gov/pub/ibtracs/v03r10/all/csv/year/Year.2014.ibtracs_all.v03r10.csv
+# Jeremy's Air:data jeremymatinez$ curl -O ftp://eclipse.ncdc.noaa.gov/pub/ibtracs/v03r10/all/csv/year/Year.2015.ibtracs_all.v03r10.csv
+# Jeremy's Air:data jeremymatinez$ cd ../
+# Jeremy's Air:workout1 jeremymatinez$ cd code
+# Jeremy's Air:code jeremymatinez$ touch make-ibtracs-data-script.txt
+# Jeremy's Air:code jeremymatinez$ vim  make-ibtracs-data-script.txt
+
+adding all csv files into one csv file
+Jeremy's Air:data jeremymatinez$ cut -f 1-12 -d "," Year.2010.ibtracs_all.v03r10.csv | tail +2 | sed " 2,2d;2d"  > ibtracs-2010-2015.csv
+Jeremy's Air:data jeremymatinez$ cut -f 1-12 -d "," Year.2011.ibtracs_all.v03r10.csv | tail +4 >> ibtracs-2010-2015.csv
+Jeremy's Air:data jeremymatinez$ cut -f 1-12 -d "," Year.2012.ibtracs_all.v03r10.csv | tail +4 >> ibtracs-2010-2015.csv
+Jeremy's Air:data jeremymatinez$ cut -f 1-12 -d "," Year.2013.ibtracs_all.v03r10.csv | tail +4 >> ibtracs-2010-2015.csv
+Jeremy's Air:data jeremymatinez$ cut -f 1-12 -d "," Year.2014.ibtracs_all.v03r10.csv | tail +4 >> ibtracs-2010-2015.csv
+Jeremy's Air:data jeremymatinez$ cut -f 1-12 -d "," Year.2015.ibtracs_all.v03r10.csv | tail +4 >> ibtracs-2010-2015.csv
+
+more unix redirections, pipes, and filters
+3.1
+# Jeremy's Air:data jeremymatinez$ cut -f 1 -d "," ibtracs-2010-2015.csv | sort -u > serial-numbers.txt | mv serial-numbers.txt ../output
+3.2
+# Jeremy's Air:data jeremymatinez$ cut -f 2 -d  "," ibtracs-2010-2015.csv | sort -n | uniq -c >records-per-year.txt | mv records-per-year.txt ../output
+3.3
+# Jeremy's Air:data jeremymatinez$ cut -f 4 -d  "," ibtracs-2010-2015.csv | sort -n | uniq -c > basin-frequencies.txt | mv basin-frequencies.txt ../output
+3.4
+# Jeremy's Air:data jeremymatinez$ cut -f 5 -d  "," ibtracs-2010-2015.csv | sort -n | uniq -c > sub-basin-frequencies.txt | mv sub-basin-frequencies.txt ../output

@@ -1,0 +1,10 @@
+ 519  AS
+ 720  BB
+ 698  CP
+ 186  CS
+ 726  EA
+ 171  GM
+10703  MM
+1840  NA
+1645  WA
+   1 Sub_basin

@@ -1,0 +1,63 @@
+---
+title: "workout1-jeremy-martinez"
+author: "Jeremy Martinez"
+date: "10/18/2019"
+output: github_document
+---
+```{r echo = FALSE}
+require("readr")
+ibtracs=read_csv("/Users/jeremymartinez/Desktop/Stat133//workouts/workout1/data/ibtracs-2010-2015.csv",skip = 1,col_names = c("serial_num",'season',"num","basin",'sub_basin','name','iso_time','nature','latitude','longitude','wind','press'), col_types = list(serial_num=col_character(),season=col_integer(),num=col_character(),basin= col_factor(),sub_basin=col_character(),name=col_character(),iso_time=col_character(),nature=col_character(),latitude=col_double(),longitude=col_double(),wind=col_double(),press=col_double()), na = c("-999.","-1.0","0.0"))
+```
+
+This report is about the different types of storms that were observed between 2010-2015.
+To start we will be looking at the number of each storm that occurred in each year
+
+```{r}
+require("dplyr")
+count(group_by(ibtracs,season))
+```
+This shows us that number of storms are monotonically increasing throughout the years between 2010-2015.To have a better understanding of what is going on, we have to look at each hemisphere to get a sense of how many storms were occurring during this time frame. To further emphasize this fact, I have provided a map of storms that show the number of storms increasing over the years below.
+
+
+```{r}
+require("ggplot2")
+library("ggplot2")
+ibtracs2=na.omit(ibtracs)
+mapWorld= borders("world", colour="purple", fill="green")
+ggplot(data = ibtracs2, aes(longitude,latitude,col=season))+mapWorld+geom_point()+ggtitle("Map of all storms")+xlab("Longitude")+ylab('Latitude')+
+geom_hline(yintercept = 0, col='red', linetype=2)+
+theme(plot.background = element_rect(fill='gray', colour='black'), panel.background = element_rect(fill = "lightblue",
+colour = "lightblue",size = 0.5, linetype = "solid"))
+```
+
+From this we can see that the amount of storms in the northern hemisphere are alot more that than the storms that occur in the southern hemisphere. But the question is, do the total number of storms, occur uniformly each year or is there more storm activity during certain months. In the histogram provided below we can see that all of the storms grouped together by month shows that most of the storms tend to happen within the month of September. This shows that more activity tends to happen in certain months then compared to being uniformly throughout the years.
+
+```{r}
+# Add month column
+library(lubridate)
+ibtrac_months <- mutate(ibtracs, month = month(iso_time, label = TRUE))
+unique_months <- summarise(group_by(ibtrac_months, month), num_storms = n_distinct(serial_num))
+ggplot(unique_months, aes(month, num_storms, col=month, fill=month)) + geom_histogram(stat = "identity")
+
+```
+
+In particular, if we were to look at two different basin within the northen hemisphere, such as the northern atlantic, and eastern pacific we can see that alot of storms over this six year period is much more concentrated with in the eastern pacific. This is indicated by the desnity plots where most of the stroms in the eastern pacific happen in the beginning and tends to decrease over time, and for the northern atlantic the storms increase very slowly indicating that storms happen less often in this specific region during this time frame .
+```{r}
+ibtracs_basin=filter(select(ibtracs,name,season,basin), basin=="EP" | basin=="NA")
+ggplot(data = ibtracs_basin, aes(x=basin,col=basin, fill= basin))+geom_density()+facet_grid(.~season)
+```
+
+In the images provided below, we can see the different nature of storms, as well as there wind speeds and pressure. In the first image we can see all the storms over several months between 2010-2015. In the following graph, this graph looks at the different storms over a 6 year period and how the patterns of these storms have evolved. In the final graph we can see the how the storms have changed over the course of 12 months over a 6 year period. 
+
+```{r echo=FALSE, fig.align="center"}
+knitr::include_graphics("/Users/jeremymartinez/Desktop/Stat133/workouts/workout1/images/map-all-storms.png")
+```
+
+```{r echo=FALSE, fig.align="center"}
+knitr::include_graphics('/Users/jeremymartinez/Desktop/Stat133/workouts/workout1/images/map-ep-na-storms-by-year.png')
+```
+
+```{r echo=FALSE, fig.align="center"}
+knitr::include_graphics('/Users/jeremymartinez/Desktop/Stat133/workouts/workout1/images/map-ep-na-storms-by-month.png')
+```
+

@@ -1,0 +1,327 @@
+---
+title: "workout3"
+author: "Jeremy Martinez"
+date: "12/1/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Run all codes in clean-data-script.R 1st before moving on in order to get data frames 
+
+```{r}
+# creates a working directory and reads each csv as a dataframe
+setwd("~/Desktop/Stat133/workouts/workout3/data/")
+AB=read.csv("../data/cleandata/Abhijit_Banerjee.csv")[-1]
+ED=read.csv("../data/cleandata/Esther_Duflo.csv")[-1]
+
+```
+
+
+## 3 Practice with Regular Expressions
+
+#A
+```{r}
+library(stringr)
+
+# Gets the sum of each scholars article that begins with a vowel, which includes lowercase and uppercase
+
+#Abhojit Banerjee
+sum(str_count(substring(AB$paperName,1,1), "[aeiouAEIOU]"))
+
+#Esther Duflo
+sum(str_count(substring(ED$paperName,1,1), "[aeiouAEIOU]"))
+```
+
+#B
+```{r}
+# Finds the articles that ends with "s" and calculates the total number of articles that each author has that ends with "s" respectively.
+
+#Abhojit Banerjee
+length(AB$paperName[str_sub(AB$paperName,-1) == 's'])
+
+#Esther Duflo
+length(ED$paperName[str_sub(ED$paperName,-1) == 's'])
+```
+
+#C
+```{r}
+
+#Finds the max length of the paperName column of both scholars
+
+#Abhojit Banerjee
+AB$paperName[str_length(AB$paperName) == max(str_length(AB$paperName))]
+
+#Esther Duflo
+ED$paperName[str_length(ED$paperName) == max(str_length(ED$paperName))]
+```
+
+#D
+```{r}
+# creates a histagram of both scholars usage of punctuations within the title 
+
+# Abhojit Banerjee
+
+summary(str_count(AB$paperName, '[:punct:]'))
+hist(str_count(AB$paperName, '[:punct:]'), xlab = "punctuation")
+
+# Esther Duflo
+summary(str_count(ED$paperName, '[:punct:]'))
+hist(str_count(ED$paperName, '[:punct:]'), xlab = "punctuation")
+```
+
+#E
+```{r}
+
+# Gets rid of certain words, punctuations and digits from article title in the paperName column for each scholar's dataframe
+
+# Abhojit Banerjee
+AB$paperName <- gsub('the |a |an |and |in |if |but ', " ",tolower(AB$paperName)) 
+AB$paperName <- gsub("[[:punct:]]", "", AB$paperName)
+AB$paperName <- gsub('[[:digit:]]', "", AB$paperName)
+
+# Esther Duflo
+ED$paperName <- gsub('the |a |an |and |in |if |but ', "",tolower(ED$paperName)) 
+ED$paperName <- gsub("[[:punct:]]", "", ED$paperName)
+ED$paperName <- gsub('[[:digit:]]', "", ED$paperName)
+```
+
+#F
+```{r}
+library(jiebaR)
+# Gets the top 10 words with in the paperName column for Abhojit Banerjee
+sort(table(qseg[AB$paperName]), decreasing = TRUE)[1:10]
+```
+
+#G
+```{r}
+# Gets the top 10 words with in the paperName column for Ester Duflo
+sort(table(qseg[ED$paperName]), decreasing = TRUE)[1:10]
+```
+
+# 4 Data visualizations
+
+
+# In the word cloud, we can see that the most commonly used words appear in the center which signifies that these words are the most commonly found words with in the titles follow by words that surround the center words, which represent the least commonly used words within article.
+
+```{r}
+#A 
+library(wordcloud,tm)
+```
+
+```{r}
+#Abhojit Banerjee wordcloud
+
+# Creates a wordcloud of the frequently used words within the paperName and saves it as a png image
+
+png(file="../images/Abhojit_Banerjee.png")
+wordcloud(AB$paperName,colors = brewer.pal(8,"Dark2"),random.order = FALSE)
+dev.off()
+```
+
+```{r}
+# Esther Duflo wordcloud
+
+# Creates a wordcloud of the frequently used words within the paperName and saves it as a png image
+png(file="../images/Esther_Duflo.png")
+wordcloud(ED$paperName,colors = brewer.pal(8,"Dark2"),random.order = FALSE)
+dev.off()
+```
+
+```{r}
+#B
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+# Creates a plot of the number of publications and saves it as a png image
+png(file="../images/Abhojit_Banerjee_publications.png")
+ggplot(data = data.frame(table(AB$year[AB$year!=""])))+geom_line(aes(x=Var1,y=Freq,group=1))+scale_x_discrete(breaks = seq(,2019,4))+ggtitle("Number of Publications of Abhojit Banerjee")+xlab("Year")+ylab("Publications")
+dev.off()
+```
+
+```{r}
+# Creates a plot of the number of publications and saves it as a png image
+png(file="../images/Esther_Duflo_publications.png")
+ggplot(data = data.frame(table(ED$year[ED$year!=""])))+geom_line(aes(x=Var1,y=Freq,group=1))+scale_x_discrete(breaks = seq(,2019,4))+ggtitle("Number of Publications of Esther Duflo")+xlab("Year")+ylab("Publications")
+dev.off()
+```
+
+
+```{r}
+#C
+# Sorts throughout the paperName column and selects the top 10 most used words,and then choosing 3 of the top 10 words for each scholar
+words_AB=sort(table(qseg[AB$paperName]), decreasing = TRUE)[1:10]
+words_AB
+
+top_3_AB=c('of',"from","evidence")
+
+words_ED=sort(table(qseg[ED$paperName]), decreasing = TRUE)[1:10]
+words_ED
+
+top_3_ED=c("to","for","india")
+```
+
+```{r}
+# Creating a data frame of 3 words within the top 10 words that are used, then making all data frames the same length in order to plot their usage later on.
+AB_freq1 = data.frame(table(filter(select(AB,year),str_detect(AB$paperName, 'of'))))
+AB_freq2 = data.frame(table(filter(select(AB,year),str_detect(AB$paperName, 'from'))))
+AB_freq3 =data.frame(table(filter(select(AB,year),str_detect(AB$paperName, 'evidence'))))
+colnames(AB_freq1) = c('year1','num1')
+colnames(AB_freq2) = c('year2','num2')
+colnames(AB_freq3) = c('year3','num3')
+AB_freq2[(nrow(AB_freq2 + 1)):nrow(AB_freq1),] = NA
+AB_freq3[(nrow(AB_freq3 + 1)):nrow(AB_freq1),] = NA
+
+
+```
+
+```{r}
+# Creates a plot of the 3 words choosen from the top 10 and seeing how much they were used during a 22 year time span
+png(file="../images/Abhojit_Banerjee_word_trend.png")
+ggplot(cbind(AB_freq1,AB_freq2,AB_freq3)) + geom_line(aes(x = year1, y = num1, group = 1,color = 'of'))+
+  geom_line(aes(x = year2, y = num2, group = 1, color = 'from'))+
+  geom_line(aes(x = year3, y = num3, group = 1,color = 'evidence')) +
+  scale_x_discrete(breaks = seq(, 2019 , 4))+
+  xlab('year') + ylab('number')+ggtitle("Top 3 Words of Abhojit Banerjee")
+dev.off()
+```
+
+```{r}
+# Creating a data frame of 3 words within the top 10 words that are used, then making all data frames the same length in order to plot their usage later on.
+ED_freq1 = data.frame(table(filter(select(ED,year),str_detect(ED$paperName, 'to'))))
+ED_freq2 = data.frame(table(filter(select(ED,year),str_detect(ED$paperName, 'for'))))
+
+ED_freq3 =data.frame(table(filter(select(ED,year),str_detect(ED$paperName, 'india'))))
+colnames(ED_freq1) = c('year1','num1')
+colnames(ED_freq2) = c('year2','num2')
+colnames(ED_freq3) = c('year3','num3')
+ED_freq2[(nrow(ED_freq2 + 1)):nrow(ED_freq1),] = NA
+ED_freq3[(nrow(ED_freq3 + 1)):nrow(ED_freq1),] = NA
+
+```
+
+```{r}
+# Creates a plot of the 3 words choosen from the top 10 and seeing how much they were used during a 22 year time span
+png(file="../images/Ester_Duflo_word_trend.png")
+ggplot(cbind(ED_freq1,ED_freq2,ED_freq3)) + geom_line(aes(x = year1, y = num1, group = 1,color = 'to'))+
+  geom_line(aes(x = year2, y = num2, group = 1, color = 'for'))+
+  geom_line(aes(x = year3, y = num3, group = 1,color = 'india')) +
+  scale_x_discrete(breaks = seq(, 2019 , 4))+
+  xlab('year') + ylab('number')+ggtitle("Top 3 Words of Ester Duflo")
+dev.off()
+```
+
+# 5 Report
+
+The purpose of this report is to see how much these scholars know each other and as well as getting more information about them and the articles that they'd published
+
+We will first look at the average number off co author that each author has.
+
+```{r}
+#Q1
+# Makes researcher column treated as character vectors for Banerjee
+AB_authors <- as.character(AB$researcher)
+
+# Finds the number of coauthors for all of Nanerjee's papers
+num_AB_coauthor <- str_count(AB_authors, "[A-Z][ ][A-Z]") - 1
+
+# Average number of coauthors for Banerjee
+avg_num_ED_coauthor <- mean(num_AB_coauthor)
+avg_num_ED_coauthor
+
+# Makes  researcher column a character column for Duflo
+ED_authors <- as.character(ED$researcher)
+
+# Finds the number of coauthors for all of Duflo's papers
+num_ED_coauthor <- str_count(ED_authors, "[A-Z][ ][A-Z]") - 1
+
+# Average  number of coauthors Duflo had  
+avg_num_duflo_coauthor <- mean(num_ED_coauthor)
+avg_num_duflo_coauthor
+```
+Here we can see that Abhojit Banerjee has more co authurs on average conpared to Ester Duflo.
+
+Here we can see that both of these scholars are friends and are friends with 3 other individuals within their academic field
+```{r}
+#Q2
+# This allows us to find the unique names of the researchers within the Abhojit Banerjee data frame that unique that
+x=subset(AB$researcher,AB$researcher==unique(AB$researcher))
+x=data.frame(researcher=x)
+x
+# This allows us to find the unique names of the researchers within the Ester Duflo data frame that unique that
+y=subset(ED$researcher,ED$researcher==unique(ED$researcher))
+y=data.frame(researcher=y)
+y
+# This allows us to find the the authors that both these authors have worked with 
+mutual_friends=inner_join(x,y)
+mutual_friends
+```
+
+
+In evaluating both data frames we see that both of these scholars have both written 25 articles together.
+
+```{r}
+#Q3
+# By filtering through the data of both data frames, we able to locate only these two scholars to see if they published papers together
+AB[["researcher"]] = toupper(AB[["researcher"]])
+filter(select(AB,paperName,researcher), researcher== 'A BANERJEE, E DUFLO')
+
+ED[["researcher"]] = toupper(ED[["researcher"]])
+filter(select(ED,paperName,researcher), researcher== 'A BANERJEE, E DUFLO')
+```
+
+
+
+Looking at the journal column of both data frames we can see that the 1st data frame contain 368 unique journals and the 2nd data frame contains 348 unique journals.
+```{r}
+#Q7 
+# This allows us to the number of the unique articles with in each data frame
+Unique_journal_AB=length(unique(AB$journal))
+Unique_journal_AB
+
+Unique_journal_ED=length(unique(ED$journal))
+Unique_journal_ED
+
+```
+In this part we can see the overall number of times each journal of Abhojit Banerjee has been cited and as well as Ester Duflo
+
+
+```{r} 
+
+#Q8
+# Abhojit Banerjee
+
+# Were able to find each journal and the number of times each one has been cited in each data frame
+total_AB_journal_citations=summarise(group_by(AB,journal,citations))
+total_AB_journal_citations
+```
+
+```{r}
+#Ester Duflo
+total_ED_journal_citations=summarise(group_by(ED,journal,citations))
+total_ED_journal_citations
+```
+based on the total number of citations of the previous part we can see that the most reliable journal for these scholars academic fields.
+
+```{r}
+#Q9
+# here we can see what the top citataion is for the journal
+most_AB_citations=AB %>% group_by(journal,citations) %>% top_n(n=1) %>% head(1)
+most_AB_citations
+```
+For Abhojit Banerjee the journal "The quarterly journal of economics 107 (3), 797-817, 1992" would be the most influencial with a total of 7190 citations
+
+
+```{r}
+most_ED_citations=ED %>% group_by(journal,citations) %>% top_n(n=1) %>% head(1)
+most_ED_citations
+```
+For Ester Duflo, we can see that the journal, "The Quarterly journal of economics 119 (1), 249-275, 2004" would also be influencial with a total of 8865 citations.
+
+Overall it would seem that "The Quarterly journal of economics" is the most reliable and influencial for these scholars field of study based on the infomation provided above.
+
