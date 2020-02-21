@@ -1,4 +1,4 @@
-# 2019-Projects
+# Projects
 
 
 - [Workout 1](workout-1)
