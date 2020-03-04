@@ -4,7 +4,7 @@
 - [Workout 1](workout-1)
 - [Workout 2](workout-2)
 - [Workout 3](workout-3)
-- [Projects](Projects)
+- [projects](projects)
 
 These are the projects that I've created using R/Rstudio and Python. These various projects with descriptions include:
 
@@ -38,7 +38,7 @@ publications within each Nobel Laureates field of study.
 • Corroborated the inference that the Nobel Laureates shared similar publications that are influential to their
 fields of study.
 
-                        -San Francisco Food Safety Analysis (project-1)-
+                        -San Francisco Food Safety Analysis (projects)-
 
 
 • Utilized pandas, NumPy, and matplotlib to clean, visualize and manipulate data of various San Francisco
