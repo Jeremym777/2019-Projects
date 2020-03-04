@@ -37,3 +37,15 @@ publications within each Nobel Laureates field of study.
 
 • Corroborated the inference that the Nobel Laureates shared similar publications that are influential to their
 fields of study.
+
+                        -San Francisco Food Safety Analysis (project-1)-
+
+
+• Utilized pandas, NumPy, and matplotlib to clean, visualize and manipulate data of various San Francisco
+businesses
+
+• Investigated that various businesses who had multiple inspections from 2016-2019, did not always improve
+their scores.
+
+• Corroborated the inference that San Francisco businesses with higher scores were mainly found within a
+specific location and have a higher rate of success.
