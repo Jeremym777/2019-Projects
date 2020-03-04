@@ -4,8 +4,9 @@
 - [Workout 1](workout-1)
 - [Workout 2](workout-2)
 - [Workout 3](workout-3)
+- [Project 1](project-1)
 
-These are the projects that I've created using R/Rstudio. These various projects with descriptions include:
+These are the projects that I've created using R/Rstudio and Python. These various projects with descriptions include:
 
                             -Storm Tracker (workout-1)-
 
