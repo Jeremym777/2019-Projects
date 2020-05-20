@@ -57,7 +57,7 @@ specific location and have a higher rate of success.
 
 • Implemented a logistic regression model to distinguish between spam and ham emails based on selected features.
 
-• Competed in a kaggle compition and achieved a model accuracy of 97.2%.
+• Competed in a Kaggle competition and achieved a model accuracy of 97.2%.
 
                                                 
                                           -Covid-19 (projects/Covid-19)-
