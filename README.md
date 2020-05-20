@@ -60,7 +60,7 @@ specific location and have a higher rate of success.
 • Competed in a kaggle compition and achieved a model accuracy of 97.2%.
 
                                                 
-                                                    -Covid-19-
+                                           -Covid-19 (projects/Covid-19)-
 
 • Utilized pandas, NumPy, and matplotlib to preform EDA of records of Covid-19.
 
