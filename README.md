@@ -27,7 +27,7 @@ investment scenarios over a 50-year period.
 
 • Established that U.S bonds would yield the maximum investment over a 50-year period.
 
-                                   -Nobel Laureate Précis Compiler (workout-3)-
+                                  -Nobel Laureate Précis Compiler (workout-3)-
 
 
 • Utilized web scraping techniques to extract and organize data of Nobel Laureates on Google Scholar.
@@ -60,7 +60,7 @@ specific location and have a higher rate of success.
 • Competed in a kaggle compition and achieved a model accuracy of 97.2%.
 
                                                 
-                                           -Covid-19 (projects/Covid-19)-
+                                          -Covid-19 (projects/Covid-19)-
 
 • Utilized pandas, NumPy, and matplotlib to preform EDA of records of Covid-19.
 
