@@ -1,5 +1,5 @@
 
-# Projects
+# Covid-19
 
-These are projects that have been done in python. Project-1 involves food satey within the San Francisco area that is split into two different parts. Project-2 involves building a logistic regression model based on the given email training set.covid19 involves building a linear regression model that predicts the number of confirmed cases, deaths cases, recoveries, and mortality rate after 30 days from May 10th.
+For this project, I utalized everything that I learned from my class in order to analyze time series data of Covid-19. During this project, I was able to create time series time plots, and a linear regression model to predict the future number of cases for confirmed, deaths, recovery, and mortality rate after 30 days from May 10th. 
 
