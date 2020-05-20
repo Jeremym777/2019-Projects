@@ -66,5 +66,5 @@ specific location and have a higher rate of success.
 
 • Created a Linear Regression model that predicted the number of confirmed cases, death cases,recovery cases, and mortality rate after a 30 day period beginning as of May 10th.
 
-• Reported that the there will be approx. more 2,843,315 confirmed cases on June 9th.
+• Reported that there will be approx. more 2,843,315 confirmed cases on June 9th.
 
