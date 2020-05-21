@@ -62,7 +62,7 @@ specific location and have a higher rate of success.
                                                 
                                           -Covid-19 (projects/Covid-19)-
 
-• Utilized pandas, NumPy, and matplotlib to preform EDA of records of Covid-19.
+• Utilized pandas, and NumPy to preform EDA of records of Covid-19.
 
 • Created a Linear Regression model that predicted the number of confirmed cases, death cases,recovery cases, and mortality rate after a 30 day period beginning as of May 10th.
 
