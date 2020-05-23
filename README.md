@@ -41,30 +41,30 @@ fields of study.
                              -San Francisco Food Safety Analysis (projects/project-1)-
 
 
-• Utilized pandas, NumPy, and matplotlib to clean, visualize and manipulate data of various San Francisco
-businesses
+• Utilized pandas, NumPy, seaborn and matplotlib to clean, visualize and manipulate data of various San Francisco businesses by removing irrelevant business scores. 
 
-• Investigated that various businesses who had multiple inspections from 2016-2019, did not always improve
-their scores.
+• Investigated that various businesses who had multiple inspections from 2016-2019 did not always improve their scores.
 
-• Corroborated the inference that San Francisco businesses with higher scores were mainly found within a
-specific location and have a higher rate of success.
+• Corroborated the inference that 4,299 business within the zip code of 94110 of San Francisco had a higher rate of success compared to any other area code by using a geospatial hexbin plot.
+
 
 
                                    -Spam/Ham Classification (projects/project-2)-
                                
-• Employed a binary classification to create training and testing sets.
+• Employed train and test validation to create a binary classification model for spam and ham emails.
 
-• Implemented a logistic regression model to distinguish between spam and ham emails based on selected features.
+• Implemented a logistic regression model to distinguish between spam and ham emails based on selected features such as replies, forwards and words that appeared frequently within emails.
 
 • Competed in a Kaggle competition and achieved a model accuracy of 97.2%.
+
 
                                                 
                                           -Covid-19 (projects/Covid-19)-
 
-• Utilized pandas, and NumPy to preform EDA of records of Covid-19.
+• Utilized pandas, matplotlib and NumPy to perform geospatial and time series visualizations of records involving Covid-19.
 
-• Created a Linear Regression model that predicted the number of confirmed cases, death cases,recovery cases, and mortality rate after a 30 day period beginning as of May 10th.
+• Created a Linear Regression model that predicted the number of confirmed cases, death cases, recovery cases, and mortality rate after a 30-day period out from May 10th.
 
-• Reported that there will be approx. more 2,843,315 confirmed cases on June 9th.
+• Reported that there will be approx. 2,843,315 more confirmed cases on June 9th.
+
 
